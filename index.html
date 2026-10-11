@@ -55,6 +55,11 @@
     .reset-btn { background:#fff; border:1px solid #dce4f1; border-radius:10px; color:#385072; font-size:12px; font-weight:750; padding:9px 13px; transition:background .15s; }
     .reset-btn:hover { background:#ecf2fd; }
     .reset-btn:focus-visible { outline:3px solid #9bb9ff; outline-offset:2px; }
+    .reset-dialog { width:min(440px, calc(100% - 32px)); border:1px solid var(--line); border-radius:20px; padding:26px; color:var(--ink); box-shadow:0 24px 80px #18223840; }
+    .reset-dialog::backdrop { background:#18223880; }
+    .reset-dialog h2 { font-size:20px; }
+    .reset-dialog p { color:var(--muted); font-size:14px; line-height:1.8; }
+    .dialog-actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:10px; margin-top:22px; }
     .storage-notice { margin-top:12px; background:#fff6e8; border:1px solid #eed3a7; padding:10px 12px; border-radius:10px; font-size:12px; color:#906018; }
     .storage-notice:empty { display:none; }
     .grid { display:grid; grid-template-columns: minmax(0,1.15fr) minmax(320px,.85fr); gap:22px; align-items:start; padding-bottom:55px; }
@@ -163,7 +168,7 @@
   <header class="topbar">
     <div class="wrap topbar-inner">
       <div class="brand"><div class="logo" aria-hidden="true">CL</div><div><div class="brand-name">Choice Lab</div><span class="brand-sub">選擇研究所</span></div></div>
-      <div class="version">V3.0 · Autosave</div>
+      <div class="version">V4.0 · Choice Lab</div>
     </div>
   </header>
 
@@ -234,11 +239,21 @@
     </div>
   </main>
 
-  <footer class="wrap footer"><span>© Choice Lab — 用清楚的標準，探索更適合自己的選擇。</span><span>V3.0｜資料自動儲存版 · 可使用重設範例重新開始</span></footer>
+  <footer class="wrap footer"><span>© Choice Lab — 用清楚的標準，探索更適合自己的選擇。</span><span>V4.0｜資料自動儲存 · 重設前請確認</span></footer>
+
+  <dialog id="reset-dialog" class="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-description">
+    <form method="dialog">
+      <h2 id="reset-title">重設範例資料？</h2>
+      <p id="reset-description">目前儲存的決策名稱、選項、權重和評分都會恢復為預設範例。若要保留目前內容，請選擇取消。</p>
+      <div class="dialog-actions">
+        <button type="submit" class="reset-btn" value="cancel" autofocus>取消，保留資料</button>
+        <button type="submit" class="add-btn" value="reset">確定重設</button>
+      </div>
+    </form>
+  </dialog>
 
   <script>
-    // Choice Lab V3 — 單一 HTML，原生 JavaScript，localStorage 本機資料保存。
-    // 升級保留 V2 的動態選項管理、即時計分與排名。
+    // Choice Lab V4 — 保留 V3 資料格式，加入可鍵盤操作的頁內重設確認。
     const STORAGE_KEY = 'choice-lab-state-v3';
     const STATE_VERSION = 3;
     const DEFAULT_QUESTION = '期末報告要選什麼主題？';
@@ -617,9 +632,12 @@
       $('question-error').textContent = '';
     });
     $('reset-data').addEventListener('click', () => {
-      if (window.confirm('確定要重設嗎？目前儲存的決策名稱、選項和評分都會恢復為預設範例。')) {
-        resetToDefaults();
-      }
+      const dialog = $('reset-dialog');
+      dialog.returnValue = '';
+      dialog.showModal();
+    });
+    $('reset-dialog').addEventListener('close', () => {
+      if ($('reset-dialog').returnValue === 'reset') resetToDefaults();
     });
     $('add-option').addEventListener('click', addOption);
     const loadResult = loadData();

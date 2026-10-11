@@ -7,7 +7,8 @@
 - **作品名稱：** Choice Lab — 選擇研究所
 - **技術：** 原生 HTML / CSS / JavaScript；localStorage；GitHub Pages
 - **網頁檔案：** [`index.html`](./index.html)（包含全部 CSS、JavaScript，無須建置工具）
-- **網站網址：** 待 GitHub Pages 發布成功後補入。
+- **網站網址：** [開啟 Choice Lab 選擇研究所](https://unknownadminpupupu.github.io/ntu-generative-ai-choice-lab/)
+- **原始碼倉庫：** [ntu-generative-ai-choice-lab](https://github.com/UnknownAdminpupupu/ntu-generative-ai-choice-lab)
 
 ## 作品介紹
 
@@ -32,7 +33,9 @@ Choice Lab 是一個決策輔助工具。使用者可以設定想比較的選項
 - **V1.0：** 規劃網站規格、建立畫面、滑桿評分、權重計算與排名圖表。
 - **V2.0：** 加入比較選項的新增、編輯、刪除，以及 2–5 個選項限制與輸入驗證。
 - **V3.0：** 加入 localStorage、重新載入資料還原、重設確認與異常資料處理。
-- **V4.0：** 整理公開部署、驗收清單與作業繳交材料。
+- **V4.0：** 沿用 V3 程式，完成 GitHub Pages 公開部署。測試環境操作原生 `window.confirm` 時發生逾時，改用 HTML `dialog` 頁內確認，提供「取消，保留資料」「確定重設」及 Escape 取消；保留 V3 的 localStorage 格式與既有資料。整理正式網址驗收與 COOL 繳交材料。
+
+V1、V2、V3 的紀錄依交接包版本檔案與說明整理；本倉庫從交接的 V3 原始碼開始建立真實提交紀錄，未追造先前版本的 Git 歷史。
 
 ## 部署方式
 
